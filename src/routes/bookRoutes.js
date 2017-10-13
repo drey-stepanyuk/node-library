@@ -1,56 +1,49 @@
-var express = require('express');
+const express = require('express');
+const bookRouter = express.Router();
+const mongodb = require('mongodb').MongoClient;
+const objectId = require('mongodb').ObjectID;
 
-var bookRouter = express.Router();
-
-var router = function(nav) {
-    var books = [
-
-    {
-        title: 'A Song of Ice and Fire',
-        genre: 'Fiction',
-        author: 'George R.R. Martin',
-        read: true
-    },
-    {
-        title: 'Harry Potter and the Prisoner of Azkaban',
-        genre: 'Fiction',
-        author: 'J.K. Rowling',
-        read: true
-    },
-    {
-        title: 'War and Peace',
-        genre: 'Historical Fiction',
-        author: 'Lev Nikolayevich Tolstoy',
-        read: true
-    },
-        {
-        title: 'A Journey into the Center of the Earth',
-        genre: 'Science Fiction',
-        author: 'Jules Verne',
-        read: false
-    }
-];
+const router = (nav) => {
 
     bookRouter.route('/')
-    .get(function (req, res) {
-        res.render('bookListView', {
-            title: 'Books',
-            nav: nav,
-            books: books
+    .get((req, res) => {
+        const url = ('mongodb://localhost:27017/libraryApp');
+
+        mongodb.connect(url, (err, db) => {
+            const collection = db.collection('books');
+            
+            collection.find({}).toArray((err, results) => {
+                res.render('bookListView', {
+                    title: 'Books',
+                    nav: nav,
+                    books: results
+                });
+            });
+            
         });
+
     });
 
     bookRouter.route('/:id')
-    .get(function (req, res) {
-        var id = req.params.id;
-        res.render('bookView', {
-            title: 'Books',
-            nav: nav,
-            book: books[id]
+    .get((req, res) => {
+        const id = new objectId(req.params.id);
+        const url = ('mongodb://localhost:27017/libraryApp');
+        
+        mongodb.connect(url, (err, db) => {
+            const collection = db.collection('books');
+            
+            collection.findOne({_id: id}, (err, results) => {
+                res.render('bookView', {
+                    title: 'Books',
+                    nav: nav,
+                    book: results
+                });
+            });
+            
         });
     });
     
     return bookRouter;
-}
+};
 
 module.exports = router;

@@ -29,7 +29,7 @@
     "boss": false,
     "debug": false,
     "eqnull": true,
-    "esnext": false,
+    "esnext": true,
     "evil": false,
     "expr": false,
     "funcscope": false,
@@ -57,4 +57,5 @@
     "globals": {
         "angular": false
     }
+    
 }

@@ -1,10 +1,10 @@
-var express = require('express');
+const express = require('express');
 
-var app = express();
+const app = express();
 
-var port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 
-var nav = [{
+const nav = [{
     Link: '/Books',
     Text: 'Books'
     }, {
@@ -12,7 +12,8 @@ var nav = [{
     Text: 'Authors'
     }];
 
-var bookRouter = require('./src/routes/bookRoutes')(nav);
+const bookRouter = require('./src/routes/bookRoutes')(nav);
+const adminRouter = require('./src/routes/adminRoutes')(nav);
 
 app.use(express.static('public'));
 app.set('views', './src/views');
@@ -20,8 +21,9 @@ app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
 app.use('/Books', bookRouter);
+app.use('/Admin', adminRouter);
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
     res.render('index', {
         title: 'Hello from render',
         nav: [{
@@ -34,10 +36,10 @@ app.get('/', function (req, res) {
     });
 });
 
-app.get('/books', function (req, res) {
+app.get('/books', (req, res) => {
     res.send('Hello Books!');
 });
 
-app.listen(port, function (err) {
+app.listen(port, (err) => {
     console.log('running server on port ' + port);
 });
