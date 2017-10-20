@@ -5,27 +5,38 @@ const mongodb = require('mongodb').MongoClient;
 const books = [
 
     {
-        title: 'A Song of Ice and Fire',
-        genre: 'Fiction',
+        title: 'A Game of Thrones',
+        genre: 'Fantasy Fiction',
         author: 'George R.R. Martin',
+        bookId: 13496,
         read: true
     },
     {
+        title: 'A Clash of Kings',
+        genre: 'Fantasy Fiction',
+        author: 'George R.R. Martin',
+        bookId: 10572,
+        read: false
+    },
+    {
         title: 'Harry Potter and the Prisoner of Azkaban',
-        genre: 'Fiction',
+        genre: 'Fanstasy Fiction',
         author: 'J.K. Rowling',
+        bookId: 5,
         read: true
     },
     {
         title: 'War and Peace',
         genre: 'Historical Fiction',
         author: 'Lev Nikolayevich Tolstoy',
+        bookId: 656,
         read: true
     },
         {
         title: 'A Journey into the Center of the Earth',
         genre: 'Science Fiction',
         author: 'Jules Verne',
+        bookId: 32829,
         read: false
     }
 ];

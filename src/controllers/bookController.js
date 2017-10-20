@@ -31,15 +31,23 @@ const bookController = (bookService, nav) => {
                 _id: id
             }, 
             (err, results) => {
-                bookService.getBookById(results.bookId,
-                    (err,  book) => {
-                        results.book = book;
-                        res.render('bookView', {
-                            title: 'Books',
-                            nav: nav,
-                            book: results
-                        });                    
-                });
+                if(results.bookId) {
+                    bookService.getBookById(results.bookId,
+                        (err,  book) => {
+                            results.book = book;
+                            res.render('bookView', {
+                                title: 'Books',
+                                nav: nav,
+                                book: results
+                            });                    
+                    });  
+                } else {
+                    res.render('bookView', {
+                        title: 'Books',
+                        nav: nav,
+                        book: results
+                    });
+                }
             });
 
         });
